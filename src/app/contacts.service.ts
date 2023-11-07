@@ -1,9 +1,16 @@
-import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class ContactsService {
+  constructor(private http: HttpClient) {}
 
-  constructor() { }
+  getContacts(): Observable<any> {
+    const url = "http://localhost:30030/contact/getAll";
+    const headers = new HttpHeaders();
+    return this.http.get<any>(url, {headers});
+  }
 }
