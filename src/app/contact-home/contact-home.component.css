@@ -3,6 +3,10 @@ table {
   width: calc(100% - 80px);
 }
 
+#new-contact {
+  margin: 20px 0px 0px 40px;
+}
+
 td:hover {
   cursor: pointer;
 }
