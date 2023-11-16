@@ -1,29 +1,41 @@
-import { Component, OnInit } from '@angular/core';
-import { ProductsService } from '../products.service';
-import { Router } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { ProductsService } from "../products.service";
+import { Router } from "@angular/router";
+import { ProductDeleteComponent } from "../product-delete/product-delete.component";
+import { MatDialog } from "@angular/material";
 
 @Component({
-  selector: 'app-product-home',
-  templateUrl: './product-home.component.html',
-  styleUrls: ['./product-home.component.css']
+  selector: "app-product-home",
+  templateUrl: "./product-home.component.html",
+  styleUrls: ["./product-home.component.css"],
 })
 export class ProductHomeComponent implements OnInit {
   products: any = [];
 
-  constructor(private productsService: ProductsService, private router: Router) { }
+  constructor(
+    private productsService: ProductsService,
+    private router: Router,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.productsService.getProducts().subscribe((data) => {
       this.products = data;
     });
   }
-  
+
   openDetailProduct(row: any) {
-    this.router.navigate(['/product', row.id])
+    this.router.navigate(["/product", row.id]);
   }
 
   updateProductDetail(product: any) {
-    this.router.navigate(['/product/update', product]);
+    this.router.navigate(["/product/update", product]);
+  }
+
+  openDeleteDialog(productId: number): void {
+    this.dialog.open(ProductDeleteComponent, {
+      data: { productId: productId },
+    });
   }
 
   displayedColumns: string[] = [
@@ -33,8 +45,7 @@ export class ProductHomeComponent implements OnInit {
     "price",
     "active",
     "date_added",
-    "category", 
-    "actions"
+    "category",
+    "actions",
   ];
-
 }
