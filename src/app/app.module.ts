@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ContactHomeComponent } from './contact-home/contact-home.component';
-import { MatButtonModule, MatCardModule, MatIconModule, MatInputModule, MatRadioModule, MatSelectModule, MatTableModule, MatToolbarModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatDialogModule, MatIconModule, MatInputModule, MatRadioModule, MatSelectModule, MatTableModule, MatToolbarModule } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 import { ContactDetailComponent } from './contact-detail/contact-detail.component';
 import { ProductHomeComponent } from './product-home/product-home.component';
@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { ProductNewComponent } from './product-new/product-new.component';
 import { ContactUpdateComponent } from './contact-update/contact-update.component';
 import { ProductUpdateComponent } from './product-update/product-update.component';
+import { ContactDeleteComponent } from './contact-delete/contact-delete.component';
 
 @NgModule({
   declarations: [
@@ -26,8 +27,10 @@ import { ProductUpdateComponent } from './product-update/product-update.componen
     ContactNewComponent,
     ProductNewComponent,
     ContactUpdateComponent,
-    ProductUpdateComponent
+    ProductUpdateComponent,
+    ContactDeleteComponent
   ],
+  entryComponents: [ContactDeleteComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -41,7 +44,8 @@ import { ProductUpdateComponent } from './product-update/product-update.componen
     FormsModule,
     MatInputModule,
     MatSelectModule,
-    MatRadioModule
+    MatRadioModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

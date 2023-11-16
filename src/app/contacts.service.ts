@@ -33,6 +33,16 @@ export class ContactsService {
     const url = "http://localhost:30030/contact/put";
     const headers = new HttpHeaders().set("Content-Type", "application/json");
     const body = contact;
-    this.http.put(url, body, {headers}).subscribe();
+    this.http.put(url, body, { headers }).subscribe();
+  }
+
+  deleteContact(contactId: number): void {
+    const url = "http://localhost:30030/contact/delete";
+    const body = { id: contactId };
+    const options = {
+      body: body,
+      headers: new HttpHeaders(),
+    };
+    this.http.delete(url, options).subscribe();
   }
 }

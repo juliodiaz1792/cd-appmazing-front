@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { ContactsService } from "../contacts.service";
 import { Router } from "@angular/router";
+import { MatDialog } from "@angular/material";
+import { ContactDeleteComponent } from "../contact-delete/contact-delete.component";
 
 @Component({
   selector: "app-contact-home",
@@ -10,7 +12,11 @@ import { Router } from "@angular/router";
 export class ContactHomeComponent implements OnInit {
   contacts: any = [];
 
-  constructor(private contactsService: ContactsService, private router: Router) {}
+  constructor(
+    private contactsService: ContactsService,
+    private router: Router,
+    public dialog: MatDialog
+  ) {}
 
   //El onInit sirve para establecer qué métodos se van a cargar antes que el HTML
   ngOnInit(): void {
@@ -20,11 +26,17 @@ export class ContactHomeComponent implements OnInit {
   }
 
   openDetailForm(row: any) {
-    this.router.navigate(['/contact', row.id])
+    this.router.navigate(["/contact", row.id]);
   }
 
-  updateContactDetail(contact : any) {
-    this.router.navigate(['/contact/update', contact]);
+  updateContactDetail(contact: any) {
+    this.router.navigate(["/contact/update", contact]);
+  }
+
+  openDeleteDialog(contactId: number): void {
+    this.dialog.open(ContactDeleteComponent, {
+      data: { contactId: contactId },
+    });
   }
 
   displayedColumns: string[] = [
@@ -34,6 +46,6 @@ export class ContactHomeComponent implements OnInit {
     "second_surname",
     "phone",
     "mail",
-    'actions'
+    "actions",
   ];
 }
