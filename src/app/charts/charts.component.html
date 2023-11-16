@@ -1,0 +1,33 @@
+<mat-card class="card">
+  <mat-card-title> Gráfico - Contactos </mat-card-title>
+  <mat-card-content>
+    <div class="chart-row">
+      <div>
+        <p><strong>Apellido inicial</strong></p>
+        <ngx-charts-bar-vertical
+          [view]="[400, 300]"
+          [results]="initialLetter"
+          [xAxis]="true"
+          [yAxis]="true"
+          [legend]="false"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          xAxisLabel="Inicial del apellido"
+          yAxisLabel="Número de contactos"
+        >
+        </ngx-charts-bar-vertical>
+      </div>
+      <div>
+        <p><strong>Tamaño del nombre</strong></p>
+      </div>
+    </div>
+    <div class="chart-row">
+      <div>
+        <p><strong>Extensiones</strong></p>
+      </div>
+      <div>
+        <p><strong>Prefijo</strong></p>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
