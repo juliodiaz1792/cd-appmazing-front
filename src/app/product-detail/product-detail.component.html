@@ -23,4 +23,12 @@
       {{ product.category?.name }}
     </p>
   </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-raised-button type="button" (click)="editProduct()">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-raised-button type="button" color= "warn" (click)="closeProduct()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-card-actions>
 </mat-card>

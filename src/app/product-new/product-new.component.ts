@@ -14,6 +14,7 @@ export class ProductNewComponent implements OnInit {
   product: Product = new Product();
   category: Category = new Category();
   categories: []
+  active: string;
 
   constructor(
     private router: Router,
@@ -28,6 +29,12 @@ export class ProductNewComponent implements OnInit {
   )}
 
   newProduct() {
+    if (this.active=='true'){
+      this.product.active= true;
+    }else{
+      this.product.active= false;
+    }
+
     const product = {
       name: this.product.name,
       stock: this.product.stock,

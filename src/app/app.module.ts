@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ContactHomeComponent } from './contact-home/contact-home.component';
-import { MatButtonModule, MatCardModule, MatCheckboxModule, MatIconModule, MatInputModule, MatLabel, MatRadioGroup, MatRadioModule, MatSelectModule, MatTableModule, MatToolbarModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatIconModule, MatInputModule, MatRadioModule, MatSelectModule, MatTableModule, MatToolbarModule } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 import { ContactDetailComponent } from './contact-detail/contact-detail.component';
 import { ProductHomeComponent } from './product-home/product-home.component';
@@ -14,6 +14,7 @@ import { ContactNewComponent } from './contact-new/contact-new.component';
 import { FormsModule } from '@angular/forms';
 import { ProductNewComponent } from './product-new/product-new.component';
 import { ContactUpdateComponent } from './contact-update/contact-update.component';
+import { ProductUpdateComponent } from './product-update/product-update.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ContactUpdateComponent } from './contact-update/contact-update.componen
     ProductDetailComponent,
     ContactNewComponent,
     ProductNewComponent,
-    ContactUpdateComponent
+    ContactUpdateComponent,
+    ProductUpdateComponent
   ],
   imports: [
     BrowserModule,
