@@ -19,6 +19,18 @@
       </div>
       <div>
         <p><strong>Tamaño del nombre</strong></p>
+        <ngx-charts-line-chart
+          [view]="[400,300]"
+          [results]="contactsByFullName"
+          [xAxis]="true"
+          [yAxis]="true"
+          [legend]="false"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          xAxisLabel="Tamaño del Nombre Completo"
+          yAxisLabel="Número de Contactos"
+        >
+        </ngx-charts-line-chart>
       </div>
     </div>
     <div class="chart-row">
