@@ -37,7 +37,7 @@
       <div>
         <p><strong>Extensiones</strong></p>
         <ngx-charts-pie-chart
-          [view]="[400,300]"
+          [view]="[400, 300]"
           [results]="emailExtensions"
           [labels]="true"
           [doughnut]="true"
@@ -46,6 +46,17 @@
       </div>
       <div>
         <p><strong>Prefijo</strong></p>
+        <ngx-charts-bar-horizontal
+          [view]="[400, 300]"
+          [results]="phonePrefixData"
+          [xAxis]="true"
+          [yAxis]="true"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          xAxisLabel="Número de Contactos"
+          yAxisLabel="Prefijo del Teléfono"
+        >
+        </ngx-charts-bar-horizontal>
       </div>
     </div>
   </mat-card-content>
