@@ -9,6 +9,7 @@ import { ContactsService } from "../contacts.service";
 export class ChartsComponent implements OnInit {
   initialLetter: [];
   contactsByFullName: [];
+  emailExtensions: [];
 
   constructor(private contactsService: ContactsService) {}
 
@@ -16,6 +17,7 @@ export class ChartsComponent implements OnInit {
     this.contactsService.getContacts().subscribe((data) => {
       this.initialLetter = this.calculateInitialLettersData(data);
       this.contactsByFullName = this.calculateContactsByFullNameData(data);
+      this.emailExtensions = this.calculateEmailExtensionsData(data);
     });
   }
 
@@ -63,5 +65,34 @@ export class ChartsComponent implements OnInit {
         ),
       };
     });
+  }
+
+  calculateEmailExtensionsData(contacts: any[]): any {
+    let emailExtensionsMap = new Map<string, number>();
+    contacts.forEach((contact) => {
+      let emailParts = contact.mail.split("@");
+      if (emailParts.length == 2) {
+        const domain = emailParts[1];
+        const firstDotIndex = domain.indexOf(".");
+        if (firstDotIndex != -1) {
+          const extension = domain.substring(firstDotIndex);
+          if (emailExtensionsMap.has(extension)) {
+            emailExtensionsMap.set(
+              extension,
+              emailExtensionsMap.get(extension) + 1
+            );
+          } else {
+            emailExtensionsMap.set(extension, 1);
+          }
+        }
+      }
+    });
+
+    let emailExtensions = [];
+    emailExtensionsMap.forEach((value, key) => {
+      emailExtensions.push({ name: key, value: value });
+    });
+
+    return emailExtensions;
   }
 }
