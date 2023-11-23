@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ContactsService } from "../contacts.service";
+import { ProductsService } from "../products.service";
+import { CategoryService } from "../category.service";
 
 @Component({
   selector: "app-charts",
@@ -12,7 +14,16 @@ export class ChartsComponent implements OnInit {
   emailExtensions: [];
   phonePrefixData: [];
 
-  constructor(private contactsService: ContactsService) {}
+  stockMap: [];
+  productsList: [];
+  productsStockPrice: [];
+  productsYear: [];
+
+  constructor(
+    private contactsService: ContactsService,
+    private productsService: ProductsService,
+    private categoryService: CategoryService
+  ) {}
 
   ngOnInit() {
     this.contactsService.getContacts().subscribe((data) => {
@@ -20,6 +31,14 @@ export class ChartsComponent implements OnInit {
       this.contactsByFullName = this.calculateContactsByFullNameData(data);
       this.emailExtensions = this.calculateEmailExtensionsData(data);
       this.phonePrefixData = this.generatePhonePrefixData(data);
+    });
+    this.productsService.getProducts().subscribe((data) => {
+      this.categoryService.getAllCategory().subscribe((data2) => {
+        this.stockMap = this.countProductsStock(data);
+        this.productsList = this.productsPrices(data);
+        this.productsStockPrice = this.showStockAndPrice(data, data2);
+        this.productsYear = this.calculateProductPerYears(data);
+      });
     });
   }
 
@@ -113,10 +132,109 @@ export class ChartsComponent implements OnInit {
 
     for (let prefix in prefixCounts) {
       if (prefixCounts.hasOwnProperty(prefix)) {
-        phonePrefixData.push({name: prefix, value: prefixCounts[prefix]})
+        phonePrefixData.push({ name: prefix, value: prefixCounts[prefix] });
       }
     }
 
     return phonePrefixData;
+  }
+
+  countProductsStock(products: any[]): any {
+    let stockMap = new Map<string, number>();
+    products.forEach((product) => {
+      let pName = product.name;
+      let pStock = product.stock;
+      if (stockMap.has(pName)) {
+        stockMap.set(pName, stockMap.get(pName) + pStock);
+      } else {
+        stockMap.set(pName, pStock);
+      }
+    });
+    let productsStock = [];
+    stockMap.forEach((value, key) => {
+      productsStock.push({ name: key, value: value });
+    });
+
+    return productsStock;
+  }
+
+  productsPrices(products: any[]): any {
+    let productMap = new Map<string, number>();
+    products.forEach((product) => {
+      let productName = product.name;
+      let productPrice = product.price;
+      productMap.set(productName, productPrice);
+    });
+    let productList = [];
+    productMap.forEach((value, key) => {
+      productList.push({ name: key, value: value });
+    });
+    return productList;
+  }
+
+  showStockAndPrice(products: any[], category: any[]): any {
+    const total = [];
+    const total2 = [];
+    var categoryData = []; 
+    var newCategory = {};
+    
+      for(let i=0;i<category.length;i++){
+        total[i]=0;
+        total2[i]=0;
+        for(let j=0;j<products.length;j++){
+          if(products[j].category.name == category[i].name){
+            total[i]+=(products[j].stock * products[j].price);
+            total2[i]+=products[j].stock
+          }
+        }
+        total.push(total[i]);
+        addCategory(category[i].name,"stock",total[i],"price",total2[i]);
+      }
+    
+    function addCategory(name,stock, value,price, value2){
+      newCategory = {
+        "name": name,
+        "series": [{
+          "name": stock,
+          "value": value
+        },
+        {
+          "name": price,
+          "value": value2
+        }]
+     
+      } 
+      categoryData.push(newCategory);
+    }
+    return categoryData;
+  }
+
+  calculateProductPerYears(products: any[]): any{
+    products.sort((a, b) => b.price - a.price);
+    var expensivestProducts = [];
+    var newProduct = {};
+
+    let x = 10;
+    for (let i = 0; i < x; i++) {
+      var expresionRegular = /\d{4}/;
+
+      addProduct(
+        products[i].name,
+        products[i].price,
+        products[i].date_added.match(expresionRegular)[0]
+      );
+    }
+
+    function addProduct(name, price, date) {
+      newProduct = {
+        "name": name,
+        "series": [{
+            "name": date,
+            "value": price,
+          }]
+      };
+      expensivestProducts.push(newProduct);
+    }
+    return expensivestProducts;
   }
 }
